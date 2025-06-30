@@ -26,7 +26,7 @@ public class CabBookingController {
 		
 		if(CustomerRegistration !=null)
 		{
-			return ResponseEntity.ok(" Registration SuceessFully");
+			return ResponseEntity.ok(" Registration SuceessFully"); 
 		}else
 		{
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
