@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ public class CabBookingController {
  
 	@Autowired
 	private CabBookingCustomerService cabBookingCustomerService;
-	@PatchMapping("/RegisterNewCustomer")
+	@PostMapping("/RegisterNewCustomer")
 	public ResponseEntity<String> CustomerRegistration(@RequestBody Customer Customer)
 	{
 		try {
@@ -43,6 +44,20 @@ public class CabBookingController {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 	                             .body("Unexpected error: " + e.getMessage());
 	    }
+		
+	}
+	@PostMapping("/login")
+	public ResponseEntity<String> CustomerLogin(@RequestBody Customer customer)
+	{
+		String response = cabBookingCustomerService.login(customer.getEmail(),customer.getPassword());
+				if(response.equals("Login SucessFully"))
+				{
+					return ResponseEntity.ok(response);
+				}else
+				{
+					return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+				}
+		
 		
 	}
 	

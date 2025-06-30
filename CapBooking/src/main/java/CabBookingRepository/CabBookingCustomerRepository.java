@@ -12,5 +12,6 @@ public interface CabBookingCustomerRepository extends JpaRepository<Customer, Lo
 
 	Optional<Customer> findByEmail(String email);
 	Optional<Customer> findByMobileNo(int phoneNumber);
+	Optional<Customer> findByEmailid(String email);
 
 }
