@@ -19,7 +19,12 @@ public class CabBookingCustomerService {
 		if(ExsitingEmail.isPresent()){
 			throw new RuntimeException("Email already exists!");
 		}
-	
+		
+		Optional<Customer> ExsitingMobileNo = cabBookingCustomerRepository.findByMobileNo(customer.getPhoneno());
+	    if(ExsitingMobileNo.isPresent())
+	    {
+	    	throw new RuntimeException("Email already exists!");
+	    }
 		Customer RegistorCustomer = cabBookingCustomerRepository.save(customer);
 		return RegistorCustomer;
 	}
