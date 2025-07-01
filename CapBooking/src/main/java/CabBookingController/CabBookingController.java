@@ -18,15 +18,16 @@ public class CabBookingController {
  
 	@Autowired
 	private CabBookingCustomerService cabBookingCustomerService;
+	
 	@PostMapping("/RegisterNewCustomer")
 	public ResponseEntity<String> CustomerRegistration(@RequestBody Customer Customer)
 	{
 		try {
 		
 		if(!Customer.getPassword().contentEquals(Customer.getConfirmPassword()))
-				{
-			     return ResponseEntity.badRequest().body("Password and confirm password do not match");
-				}
+		{
+		return ResponseEntity.badRequest().body("Password and confirm password do not match");
+		}
 		Customer CustomerRegistration = cabBookingCustomerService.RegistorCutomer(Customer);
 		
 		if(CustomerRegistration !=null)
@@ -47,15 +48,16 @@ public class CabBookingController {
 		
 	}
 	@PostMapping("/login")
-	public ResponseEntity<String> CustomerLogin(@RequestBody Customer customer)
+	public ResponseEntity<Customer> CustomerLogin(@RequestBody Customer customer)
 	{
-		String response = cabBookingCustomerService.login(customer.getEmail(),customer.getPassword());
+		
+		String response = (String) cabBookingCustomerService.login(customer.getEmail(),customer.getPassword());
 				if(response.equals("Login SucessFully"))
-				{
-					return ResponseEntity.ok(response);
+				{ 
+					return ResponseEntity.ok(customer);
 				}else
 				{
-					return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+					return ResponseEntity.badRequest().body(customer);
 				}
 		
 		
